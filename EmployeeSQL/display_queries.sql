@@ -13,12 +13,16 @@ WHERE hire_date between '1986-01-01' and '1986-12-31'
 
 -- Department Managers
 
-select employees.first_name, employees.last_name, employees.employee_num, dep_manager.department_num, dep_manager.employee_num, departments.dept_name
-From employees
-LEFT JOIN dep_manager
-ON employees.employee_num = dep_manager.employee_num
+select dep_manager.employee_num,
+	dep_manager.department_num,
+	departments.dept_name,
+	employees.first_name,
+	employees.last_name
+From dep_manager
 LEFT JOIN departments
-ON dep_manager.department_num = departments.dept_name
+ON dep_manager.department_num = departments.dept_no
+LEFT JOIN employees
+ON dep_manager.employee_num = employees.employee_num
 
 -- Department of Each Employee
 
@@ -71,3 +75,13 @@ OR department_num = 'd009'
 
 -- Least Common Employee Names
 
+Select
+	last_name,
+	COUNT(*)
+	
+From employees
+
+Group by
+	last_name
+ORDER BY
+	count DESC
